@@ -1,3 +1,13 @@
+Autofill for Firefox Fork
+=========================
+This is a wonderful, time saving add-on for Mozilla Firefox.
+Two options have been added.
+- _Enable/Disable Automatic Form Filling_ - (Disabled by default.)
+- _Enable/Disable Autofill Toolbar Button_ - (Enabled by default.)
+
+All additions to the code can be found by searching for Aladio.
+
+
 Autofill for Firefox
 ====================
 
