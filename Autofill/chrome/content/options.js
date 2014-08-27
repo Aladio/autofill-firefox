@@ -526,7 +526,10 @@ function loadOptions() {
     sound: D.getElementById('content-sound'),
     mask: D.getElementById('content-mask'),
     menu: D.getElementById('content-menu'),
-    confirm: D.getElementById('content-confirm')
+    confirm: D.getElementById('content-confirm'),
+    //Added by Aladio for toolbar button
+    autoform: D.getElementById('content-autoform'),
+    toolbar: D.getElementById('content-toolbar')
   };
   oD = D.getElementById('content-delay-sec');
   oDO = D.getElementById('content-delay-out');

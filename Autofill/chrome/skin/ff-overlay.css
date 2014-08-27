@@ -1,1 +1,23 @@
-#autofill-menu{list-style-image:url(icon_16x16.png)}
+#autofill-menu {
+    list-style-image: url("icon_16x16.png");
+}
+/* Added by Aladio for toolbar items */
+#autofill-button, #wrapper-autofill-button {
+    list-style-image: url("icon_16x16.png");
+}
+#clear-menuitem {
+    list-style-image: url("warning.png");
+}
+.profile-menuitem{
+    list-style-image: url("addressbook.png");
+}
+#addrule-menuitem{
+    list-style-image: url("add.png");
+}
+#options-menuitem{
+    list-style-image: url("application.png");
+}
+toolbar[iconsize="small"] #autofill-button {
+  list-style-image: url("icon_16x16.png");
+}
+

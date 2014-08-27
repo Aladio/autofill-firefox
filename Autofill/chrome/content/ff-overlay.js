@@ -21,6 +21,10 @@ if (typeof Autofill=='undefined') {
     /* Delay 1 sec to allow dynamically built iframes to be detected */
     delay: function(e) {
       var n = +Autofill.P.getCharPref('extensions.autofill.delaysec');
+      //Added by Aladio to disable auto form fill on page load
+      var a = +Autofill.P.getBoolPref('extensions.autofill.autoform');
+      if (a===0) return;
+      //End
       if (n>0) window.setTimeout(function(){Autofill.execute(e);}, n*1000);
       else Autofill.execute(e);
     },
@@ -29,6 +33,14 @@ if (typeof Autofill=='undefined') {
       var oMenu = document.getElementById('contentAreaContextMenu');
       oMenu.addEventListener('popupshowing', this.drawMenu, false);
       gBrowser.addEventListener('DOMContentLoaded', this.delay, true);
+            // Added by Aladio to show or hide the toolbar button   
+            var tb = P.getBoolPref('extensions.autofill.toolbar');
+            var btn = document.getElementById('autofill-button');
+            if (tb == false) {
+                btn.style.display = 'none';
+            } else {
+                btn.style.display = 'block';
+            }
     },
     /* Render main Autofill context menu */
     drawMenu: function() {
@@ -61,6 +73,55 @@ if (typeof Autofill=='undefined') {
       }
       oMenuCats.getItemAtIndex(nCatIndex).setAttribute('checked', 'true');
     },
+    // Added by Aladio to make autofill toolbar items //
+        drawToolbarButton: function(){  
+        var d=this;
+        var popup = document.getElementById("cats-button-items");
+        while(popup.hasChildNodes()){
+            popup.removeChild(popup.firstChild);
+        }
+        //TODO fix this to match above and add titles
+        for(var g="extensions.autofill.",c=document.getElementById("autofill-menu-cats"),e=d.P.prefHasUserValue(g+"cats")?JSON.parse(d.P.getComplexValue(g+"cats",d.SS).data):[],h=d.P.getIntPref(g+"catnow"),b=2,i=Math.max(c.itemCount-2,e.length),f=0,a;b-2<i;b++,f++){
+            if(e[f]){
+                var newmenuitem = document.createElement("menuitem");
+                popup.appendChild(newmenuitem);
+                newmenuitem.label = e[f].n;// <--  e[f].n  is the name of the profile!!!
+                newmenuitem.setAttribute("id","pro"+f+"menuitem");
+                newmenuitem.setAttribute("name","autofill-profile");
+                newmenuitem.setAttribute("class","menuitem-iconic profile-menuitem");
+                newmenuitem.setAttribute("oncommand","Autofill.execute(null,"+b+")");
+            }
+
+        }
+        
+        var optionssep = document.createElement("menuseparator");
+        popup.appendChild(optionssep);
+
+        var clearmenuitem = document.createElement("menuitem");
+        popup.appendChild(clearmenuitem);
+        clearmenuitem.label = "Clear Forms";
+        clearmenuitem.setAttribute("id","clear-menuitem");
+        clearmenuitem.setAttribute("name","clear-forms");
+        clearmenuitem.setAttribute("class","menuitem-iconic");
+        clearmenuitem.setAttribute("oncommand","Autofill.clearForms()");
+        clearmenuitem.setAttribute("tooltiptext","This will completely clear all forms!")
+
+        var optionsmenuitem = document.createElement("menuitem");
+        popup.appendChild(optionsmenuitem);
+        optionsmenuitem.label = "Options";
+        optionsmenuitem.setAttribute("id","options-menuitem");
+        optionsmenuitem.setAttribute("name","options-button");
+        optionsmenuitem.setAttribute("class","menuitem-iconic");
+        optionsmenuitem.setAttribute("oncommand","Autofill.showPrefs()");
+    },
+    // Added by Aladio to clear forms //
+    clearForms: function(){
+        for(var idx=0; idx<window.content.document.forms.length; idx++) {
+            window.content.document.forms[idx].reset();
+        }
+
+    },
+    // End
     /* Execute Autofill */
     execute: function(e, nCI) {
       // Document that triggered 'onload' event

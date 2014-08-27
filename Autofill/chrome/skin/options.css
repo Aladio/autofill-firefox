@@ -23,7 +23,8 @@ textbox {
 /* Options window */
 #autofill-options {
   width: 646px;
-  height: 464px;
+  /* Changed from 464px by Aladio */
+  height: 520px;
 }
 
 /* Panel bar */

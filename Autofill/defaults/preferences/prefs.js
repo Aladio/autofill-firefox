@@ -13,3 +13,6 @@ pref("extensions.autofill.mask", true);
 pref("extensions.autofill.menu", true);
 pref("extensions.autofill.confirm", true);
 pref("extensions.autofill.wizopen", false);
+// Added by Aladio for toolbar
+pref("extensions.autofill.autoform", true);
+pref("extensions.autofill.toolbar", true);
